@@ -33440,6 +33440,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+//git subtree push --prefix dist origin gh-pages
 var Main = /*#__PURE__*/function () {
   function Main() {
     _classCallCheck(this, Main);
@@ -33614,7 +33615,7 @@ var Main = /*#__PURE__*/function () {
       // bClear 가 true라면 모든 타일 정위치
       if (bClear) {
         this["tile_" + this.emptyIndex].setVisible(true);
-        console.log('Game Clear');
+        console.log("Game Clear");
       }
     }
   }]);
@@ -33646,7 +33647,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49996" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53544" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

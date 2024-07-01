@@ -1,4 +1,4 @@
 ## 폴더 무시
 node_modules
-dist/
+/dist
 .cache
