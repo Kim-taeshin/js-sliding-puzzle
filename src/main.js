@@ -1,6 +1,8 @@
 import * as PIXI from "pixi.js";
 import Tile from "./tile";
 
+//git subtree push --prefix dist origin gh-pages
+
 class Main {
   constructor() {
     this.app = new PIXI.Application({
@@ -64,14 +66,12 @@ class Main {
     this.setShuffle();
   }
 
-  setShuffle()
-  {
+  setShuffle() {
     let prevIndex = -1;
 
-    for(let i = 0; i < 2; i++)
-    {
+    for (let i = 0; i < 2; i++) {
       const emptyIndex = this.emptyIndex;
-      
+
       const rndMove = [];
 
       const line = Math.trunc(emptyIndex / this.row);
@@ -80,39 +80,32 @@ class Main {
       const leftIndex = emptyIndex - 1;
       const rightIndex = emptyIndex + 1;
 
-      if(downIndex < this.TOTAL_CELL )
-      {
-        if(prevIndex != downIndex)  rndMove.push(downIndex);
-      } 
-
-      if(upIndex > 0)
-      {
-        if(prevIndex != upIndex) rndMove.push(upIndex);
+      if (downIndex < this.TOTAL_CELL) {
+        if (prevIndex != downIndex) rndMove.push(downIndex);
       }
 
-      if(line === Math.trunc(rightIndex/ this.row))
-      {
-        if(prevIndex != rightIndex) rndMove.push(rightIndex);
+      if (upIndex > 0) {
+        if (prevIndex != upIndex) rndMove.push(upIndex);
       }
-    
-      if(line === Math.trunc(leftIndex / this.row) && leftIndex > -1)
-      {
-        
-        if(prevIndex != leftIndex) rndMove.push(leftIndex);
+
+      if (line === Math.trunc(rightIndex / this.row)) {
+        if (prevIndex != rightIndex) rndMove.push(rightIndex);
       }
-      
+
+      if (line === Math.trunc(leftIndex / this.row) && leftIndex > -1) {
+        if (prevIndex != leftIndex) rndMove.push(leftIndex);
+      }
+
       const rnd = Math.floor(Math.random() * rndMove.length);
       const nextMoveIndex = rndMove[rnd];
 
       prevIndex = emptyIndex;
-      
+
       this.moveTile(nextMoveIndex, emptyIndex);
     }
   }
 
- 
-  moveTile(currentIndex, emptyIndex)
-  {
+  moveTile(currentIndex, emptyIndex) {
     // 클릭한 타일이 비어 있는 타일 위치로 이동하고
     // 비어 있는 타일은 클릭한 타일 위치로 이동해야 된다.
     // 그러므로 둘의 currentIndex값이 교환되어야 한다.
@@ -128,19 +121,27 @@ class Main {
     this.emptyIndex = currentIndex;
 
     const currentTile = this.tileArr[currentIndex];
-    currentTile.x = 
-    (currentTile.currentIndex < this.row)? currentTile.currentIndex * 100 : currentTile.currentIndex % this.row * 100;
+    currentTile.x =
+      currentTile.currentIndex < this.row
+        ? currentTile.currentIndex * 100
+        : (currentTile.currentIndex % this.row) * 100;
 
-    currentTile.y = 
-    (currentTile.currentIndex < this.row)? 0 : Math.trunc(currentTile.currentIndex / this.column) * 100;
+    currentTile.y =
+      currentTile.currentIndex < this.row
+        ? 0
+        : Math.trunc(currentTile.currentIndex / this.column) * 100;
 
     const emptyTile = this.tileArr[emptyIndex];
-    emptyTile.x = 
-    (emptyTile.currentIndex < this.row)? emptyTile.currentIndex * 100 : emptyTile.currentIndex % this.row * 100;
+    emptyTile.x =
+      emptyTile.currentIndex < this.row
+        ? emptyTile.currentIndex * 100
+        : (emptyTile.currentIndex % this.row) * 100;
 
-    emptyTile.y = 
-    (emptyTile.currentIndex < this.row)? 0 : Math.trunc(emptyTile.currentIndex / this.column) * 100;
-    
+    emptyTile.y =
+      emptyTile.currentIndex < this.row
+        ? 0
+        : Math.trunc(emptyTile.currentIndex / this.column) * 100;
+
     /*
     // 변경된 배열순으로 타일을 재배치 한다.
     let posX = 0; //타일 x값
@@ -159,45 +160,37 @@ class Main {
     */
   }
 
-  hnClick(evt)
-  { 
+  hnClick(evt) {
     const tile = evt.currentTarget;
     const currentIndex = tile.currentIndex;
     const emptyIndex = this.emptyIndex;
 
-    if(currentIndex + this.column === emptyIndex)
-    {
+    if (currentIndex + this.column === emptyIndex) {
       //console.log("아래로 이동 가능");
       this.moveTile(currentIndex, emptyIndex);
-    } 
-    else if(currentIndex - this.column === emptyIndex)
-    {
+    } else if (currentIndex - this.column === emptyIndex) {
       //console.log("위로 이동 가능");
       this.moveTile(currentIndex, emptyIndex);
-    }
-    else if(Math.trunc(currentIndex / this.row) === Math.trunc(emptyIndex / this.row))
-    {
+    } else if (
+      Math.trunc(currentIndex / this.row) === Math.trunc(emptyIndex / this.row)
+    ) {
       //console.log("같은 줄에 있음");
-      if(currentIndex + 1 === emptyIndex)
-      {
+      if (currentIndex + 1 === emptyIndex) {
         //console.log("오른쪽 이동 가능");
         this.moveTile(currentIndex, emptyIndex);
-      }
-      else if(currentIndex - 1 === emptyIndex)
-      {
+      } else if (currentIndex - 1 === emptyIndex) {
         //console.log("왼쪽 이동 가능");
         this.moveTile(currentIndex, emptyIndex);
-      } 
+      }
     }
 
     //this.checkAnswer();
     const currentTile = this.tileArr[emptyIndex];
     console.log(currentTile.getIsCorrectPosition());
-    if(currentTile.getIsCorrectPosition()) this.checkAnswer();
+    if (currentTile.getIsCorrectPosition()) this.checkAnswer();
   }
 
-  checkAnswer()
-  {
+  checkAnswer() {
     let bClear = true;
     for (let i = 0; i < this.TOTAL_CELL; i++) {
       // 각 타일이 정위치에 있는지 확인
@@ -205,18 +198,16 @@ class Main {
       // for문 빠져나갈 것.
       const tile = this["tile_" + i];
       const bool = tile.getIsCorrectPosition();
-      if(!bool)
-      {
+      if (!bool) {
         bClear = false;
         break;
       }
     }
 
     // bClear 가 true라면 모든 타일 정위치
-    if(bClear)
-    {
+    if (bClear) {
       this["tile_" + this.emptyIndex].setVisible(true);
-      console.log('Game Clear');
+      console.log("Game Clear");
     }
   }
 }
